@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Polimata - Resume Medis</title>
+<style>
+body{
+    font-family: Arial, sans-serif;
+    margin:0;
+    background:#f1f5f9;
+}
+nav{
+    background:#1e3a8a;
+    padding:10px;
+    display:flex;
+    gap:10px;
+}
+nav button{
+    background:#fff;
+    border:none;
+    padding:10px 15px;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:bold;
+}
+nav button:hover{background:#e0e7ff}
+.container{
+    background:#fff;
+    max-width:900px;
+    margin:20px auto;
+    padding:25px;
+    border-radius:10px;
+}
+h3{margin-top:0;color:#1e3a8a}
+input, textarea, select{
+    width:100%;
+    padding:8px;
+    margin-bottom:10px;
+}
+button.save{
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    padding:10px 20px;
+    border-radius:6px;
+    cursor:pointer;
+}
+pre{
+    background:#f8fafc;
+    padding:15px;
+    white-space:pre-wrap;
+    border-radius:8px;
+}
+/* ===== LOGIN ===== */
+#loginPage{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#1e3a8a,#2563eb);
+}
+.login-box{
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(10px);
+    padding:30px;
+    width:320px;
+    border-radius:12px;
+    color:#fff;
+}
+.login-box h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+.login-box input{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:6px;
+    margin-bottom:12px;
+}
+.login-box button{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:20px;
+    background:#fff;
+    font-weight:bold;
+    cursor:pointer;
+}
+.app{
+    display:none;
+}
+
+</style>
+</head>
+
+<body>
+    <div id="loginPage">
+    <div class="login-box">
+        <h2>SIPOMA</h2>
+        <p>Sistem Informasi Polimata</p>
+
+        <input id="username" placeholder="Username">
+        <input id="password" type="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+    </div>
+</div>
+
+
+<nav>
+    <button onclick="menuIdentitas()">Informasi</button>
+    <button onclick="menuMasuk()">Pendaftaran</button>
+    <button onclick="menuDiagnosa()">Diagnosa</button>
+    <button onclick="menuPemeriksaan()">Pemeriksaan</button>
+    <button onclick="menuTindakan()">Tindakan & Terapi</button>
+    <button onclick="menuKeluar()">Keluar</button>
+    <button onclick="menuResume()">Resume Medis</button>
+</nav>
+
+<div class="container" id="content"></div>
+</div>
+
+
+<script>
+/* ===== DATA GLOBAL RESUME ===== */
+let resume = {
+  identitas:{},
+  masuk:{},
+  diagnosa:{},
+  pemeriksaan:{},
+  tindakan:{},
+  terapi:{},
+  keluar:{}
+};
+
+/* ===== MENU IDENTITAS ===== */
+function menuIdentitas(){
+content.innerHTML=`
+<h3>Informasi Pasien</h3>
+<input id="rm" placeholder="Nomor RM">
+<input id="nama" placeholder="Nama Pasien">
+<select id="jk"><option>L</option><option>P</option></select>
+<input id="umur" placeholder="Umur">
+<textarea id="alamat" placeholder="Alamat"></textarea>
+<input id="dokter" placeholder="Dokter DPJP">
+<button class="save" onclick="simpanIdentitas()">Simpan</button>
+`;
+}
+function simpanIdentitas(){
+resume.identitas={
+rm:rm.value,nama:nama.value,jk:jk.value,umur:umur.value,
+alamat:alamat.value,dokter:dokter.value
+};
+alert("Identitas tersimpan");
+}
+
+/* ===== MENU MASUK ===== */
+function menuMasuk(){
+content.innerHTML=`
+<h3>Data Masuk Rawat</h3>
+<input type="date" id="tglMasuk">
+<input id="bagian" placeholder="Bagian">
+<input id="kmr" placeholder="Kamar">
+<button class="save" onclick="simpanMasuk()">Simpan</button>
+`;
+}
+function simpanMasuk(){
+resume.masuk={tglMasuk:tglMasuk.value,bagian:bagian.value,kmr:kmr.value};
+}
+
+/* ===== MENU DIAGNOSA ===== */
+function menuDiagnosa(){
+content.innerHTML=`
+<h3>Diagnosa</h3>
+<textarea id="alasan" placeholder="Alasan Masuk"></textarea>
+<textarea id="diagMasuk" placeholder="Diagnosa Masuk"></textarea>
+<input id="utama" placeholder="Diagnosa Utama">
+<input id="tambahan" placeholder="Diagnosa Tambahan">
+<input id="komplikasi" placeholder="Komplikasi">
+<input id="penyebab" placeholder="Disebabkan oleh">
+<button class="save" onclick="simpanDiagnosa()">Simpan</button>
+`;
+}
+function simpanDiagnosa(){
+resume.diagnosa={
+alasan:alasan.value,masuk:diagMasuk.value,utama:utama.value,
+tambahan:tambahan.value,komplikasi:komplikasi.value,penyebab:penyebab.value
+};
+}
+
+/* ===== PEMERIKSAAN ===== */
+function menuPemeriksaan(){
+content.innerHTML=`
+<h3>Pemeriksaan</h3>
+<textarea id="fisik" placeholder="Pemeriksaan Fisik"></textarea>
+<textarea id="penunjang" placeholder="Pemeriksaan Penunjang"></textarea>
+<button class="save" onclick="simpanPemeriksaan()">Simpan</button>
+`;
+}
+function simpanPemeriksaan(){
+resume.pemeriksaan={fisik:fisik.value,penunjang:penunjang.value};
+}
+
+/* ===== TINDAKAN & TERAPI ===== */
+function menuTindakan(){
+content.innerHTML=`
+<h3>Tindakan & Terapi</h3>
+<input id="tindakan" placeholder="Jenis Tindakan">
+<textarea id="terapi" placeholder="Terapi yang diberikan"></textarea>
+<button class="save" onclick="simpanTindakan()">Simpan</button>
+`;
+}
+function simpanTindakan(){
+resume.tindakan={tindakan:tindakan.value};
+resume.terapi={terapi:terapi.value};
+}
+
+/* ===== KELUAR ===== */
+function menuKeluar(){
+content.innerHTML=`
+<h3>Data Keluar Pasien</h3>
+<input type="date" id="tglKeluar">
+<select id="keadaan">
+<option>Sembuh</option><option>Perbaikan</option><option>Tidak Ada Perbaikan</option>
+</select>
+<select id="cara">
+<option>Atas Persetujuan</option><option>Dirujuk</option><option>Pulang Paksa</option>
+</select>
+<select id="prognosa">
+<option>Prognosa baik</option><option>Prognosa buruk</option>
+</select>
+<input type="date" id="kontrol">
+<button class="save" onclick="simpanKeluar()">Simpan</button>
+`;
+}
+function simpanKeluar(){
+resume.keluar={
+tglKeluar:tglKeluar.value,keadaan:keadaan.value,
+cara:cara.value,prognosa:prognosa.value,kontrol:kontrol.value
+};
+}
+
+/* ===== RESUME MEDIS ===== */
+function menuResume(){
+content.innerHTML=`
+<h3>RESUME MEDIS (RM II)</h3>
+
+<pre>
+NOMOR RM : ${resume.identitas.rm}
+Nama Pasien : ${resume.identitas.nama} (${resume.identitas.jk})
+Umur : ${resume.identitas.umur}
+Alamat : ${resume.identitas.alamat}
+Dokter : ${resume.identitas.dokter}
+
+Tgl Masuk : ${resume.masuk.tglMasuk}
+Bagian : ${resume.masuk.bagian}
+KMR : ${resume.masuk.kmr}
+
+Alasan Masuk :
+${resume.diagnosa.alasan}
+
+Diagnosa Masuk :
+${resume.diagnosa.masuk}
+
+Diagnosa Keluar :
+- Utama : ${resume.diagnosa.utama}
+- Tambahan : ${resume.diagnosa.tambahan}
+- Komplikasi : ${resume.diagnosa.komplikasi}
+
+Disebabkan Oleh :
+${resume.diagnosa.penyebab}
+
+Pemeriksaan Fisik :
+${resume.pemeriksaan.fisik}
+
+Pemeriksaan Penunjang :
+${resume.pemeriksaan.penunjang}
+
+Tindakan :
+${resume.tindakan.tindakan}
+
+Terapi :
+${resume.terapi.terapi}
+
+Keadaan Keluar : ${resume.keluar.keadaan}
+Cara Keluar : ${resume.keluar.cara}
+Prognosa : ${resume.keluar.prognosa}
+Kontrol Kembali : ${resume.keluar.kontrol}
+</pre>
+
+<div style="text-align:right;margin-top:15px;">
+    <button class="save" onclick="window.print()">🖨 PRINT RESUME</button>
+</div>
+
+`;
+}
+/* ===== LOGIN SCRIPT ===== */
+function login(){
+    const u = document.getElementById("username").value;
+    const p = document.getElementById("password").value;
+
+    if(u === "admin" && p === "12345"){
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("app").style.display = "block";
+    }else{
+        alert("Username atau Password salah");
+    }
+}
+</script>
+
+</body>
+</html>
